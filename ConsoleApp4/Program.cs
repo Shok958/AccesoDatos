@@ -11,20 +11,32 @@ namespace AccesoDatos
     {
         static void Main(string[] args)
         {
-            var connection = new SqlConnection("conexion");
+            var connection = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;
+                                                            Initial Catalog=Pizzeria;
+                                                            Integrated Security=True;
+                                                            Connect Timeout=30;
+                                                            Encrypt=False;
+                                                            TrustServerCertificate=True;
+                                                            ApplicationIntent=ReadWrite;
+                                                            MultiSubnetFailover=False");
             try
             {
                 connection.Open();
             }
-            catch (Exception e)
-            {
+            catch(SqlException e) {
                 Console.WriteLine(e.Message);
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.GetType().Name);
+            }
             finally {
-                if (connection.State == System.Data.ConnectionState.Open) {
-                    connection.Close();
-                }
+                //if (connection.State == System.Data.ConnectionState.Open) {
+                    //connection.Close();
+                //}
                 connection.Dispose();
+                Console.WriteLine(connection.State);
+                Console.ReadLine();
             }
         }
     }
