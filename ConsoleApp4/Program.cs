@@ -11,33 +11,52 @@ namespace AccesoDatos
     {
         static void Main(string[] args)
         {
-            var connection = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;
+
+            using (var person = new Person()) {
+
+            }
+
+            /*using (var connection = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;
                                                             Initial Catalog=Pizzeria;
                                                             Integrated Security=True;
                                                             Connect Timeout=30;
                                                             Encrypt=False;
                                                             TrustServerCertificate=True;
                                                             ApplicationIntent=ReadWrite;
-                                                            MultiSubnetFailover=False");
-            try
+                                                            MultiSubnetFailover=False"))
             {
-                connection.Open();
-            }
-            catch(SqlException e) {
-                Console.WriteLine(e.Message);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.GetType().Name);
-            }
-            finally {
-                //if (connection.State == System.Data.ConnectionState.Open) {
-                    //connection.Close();
-                //}
-                connection.Dispose();
-                Console.WriteLine(connection.State);
-                Console.ReadLine();
-            }
+                connection.Open();//te quitas la llamda a dispose
+            }*/
+            /* try
+             {
+                 connection.Open();
+             }
+             catch(SqlException e) {
+                 Console.WriteLine(e.Message);
+             }
+             catch (Exception e)
+             {
+                 Console.WriteLine(e.GetType().Name);
+             }
+             finally {
+                 //if (connection.State == System.Data.ConnectionState.Open) {
+                     //connection.Close();
+                 //}
+                 connection.Dispose();
+                 Console.WriteLine(connection.State);
+                 Console.ReadLine();
+             }*/
+
+        }
+    }
+
+    class Person:IDisposable {
+
+        public int Id { get; set; }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }
