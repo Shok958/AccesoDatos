@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace AccesoDatos
 {
@@ -11,10 +12,6 @@ namespace AccesoDatos
     {
         static void Main(string[] args)
         {
-
-           /* using (var person = new Person()) {
-
-            }*/
 
             using (var connection = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;
                                                             Initial Catalog=Pizzeria;
@@ -25,12 +22,34 @@ namespace AccesoDatos
                                                             ApplicationIntent=ReadWrite;
                                                             MultiSubnetFailover=False"))
             {
-                connection.Open();
-                SqlCommand query = new SqlCommand(@"INSERT INTO Client (id,Name) Values (1,'Pepe')", connection);
-                query.ExecuteNonQuery();
+                SqlParameter id = new SqlParameter("@id", SqlDbType.UniqueIdentifier);
+                SqlParameter name = new SqlParameter("@name", SqlDbType.VarChar, 11);
+                id.Value = Guid.NewGuid();
+                name.Value = "Luis";
+
+                try
+                {
+                    connection.Open();
+                }catch (SqlException e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
+                try
+                {
+                    SqlCommand query = new SqlCommand(@"INSERT INTO Client (Id, Name) Values (@id, @name)", connection);
+                    query.Parameters.Add(id);
+                    query.Parameters.Add(name);
+                    query.ExecuteNonQuery();
+                }catch (SqlException e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
             }
 
-           
+            /* using (var person = new Person()) {
+
+             }*/
             /* try
              {
                  connection.Open();
