@@ -12,11 +12,11 @@ namespace AccesoDatos
         static void Main(string[] args)
         {
 
-            using (var person = new Person()) {
+           /* using (var person = new Person()) {
 
-            }
+            }*/
 
-            /*using (var connection = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;
+            using (var connection = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;
                                                             Initial Catalog=Pizzeria;
                                                             Integrated Security=True;
                                                             Connect Timeout=30;
@@ -25,8 +25,12 @@ namespace AccesoDatos
                                                             ApplicationIntent=ReadWrite;
                                                             MultiSubnetFailover=False"))
             {
-                connection.Open();//te quitas la llamda a dispose
-            }*/
+                connection.Open();
+                SqlCommand query = new SqlCommand(@"INSERT INTO Client (id,Name) Values (1,'Pepe')", connection);
+                query.ExecuteNonQuery();
+            }
+
+           
             /* try
              {
                  connection.Open();
